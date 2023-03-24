@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Deporte {
 
     private ArrayList<Torneo> torneos = new ArrayList();
-    private String periodo;
+    
     private String nombre;
 
     public Deporte() {
@@ -40,13 +40,7 @@ public class Deporte {
         this.torneos = torneos;
     }
 
-    public String getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(String periodo) {
-        this.periodo = periodo;
-    }
+    
 
     @Override
     public String toString() {

@@ -31,11 +31,21 @@ public class ExamenII extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTree = new javax.swing.JTree();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+
+        jMenuItem1.setText("Ingresar Torneo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +61,11 @@ public class ExamenII extends javax.swing.JFrame {
         treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Q5");
         treeNode1.add(treeNode2);
         JTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        JTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTreeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTree);
 
         jLabel1.setFont(new java.awt.Font("Cute Playful Demo", 1, 36)); // NOI18N
@@ -110,8 +125,7 @@ public class ExamenII extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre de el equipo: ");
         DefaultTreeModel m = (DefaultTreeModel) JTree.getModel();
-        DefaultMutableTreeNode root
-                = (DefaultMutableTreeNode) m.getRoot();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) m.getRoot();
         DefaultMutableTreeNode nodo_deporte = new DefaultMutableTreeNode(new Deporte(nombre));
         DefaultMutableTreeNode nodo_deporte1 = new DefaultMutableTreeNode(new Deporte(nombre));
         DefaultMutableTreeNode nodo_deporte2 = new DefaultMutableTreeNode(new Deporte(nombre));
@@ -124,6 +138,41 @@ public class ExamenII extends javax.swing.JFrame {
 
         m.reload();
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void JTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTreeMouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton() == 3) {
+            int fila = JTree.getClosestRowForLocation(evt.getX(), evt.getY());
+            JTree.setSelectionRow(fila);
+            Object v1 = JTree.getSelectionPath().getLastPathComponent();
+            nodoS = (DefaultMutableTreeNode) v1;
+            if (nodoS.getUserObject() instanceof Deporte) {
+                jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_JTreeMouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        DefaultTreeModel m = (DefaultTreeModel) JTree.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) m.getRoot();
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre de el torno: ");
+        Deporte deporte = (Deporte) nodoS.getUserObject();
+        if (nodoS.getParent().toString().equals("Q1")) {
+            DefaultMutableTreeNode nodo_torneo = new DefaultMutableTreeNode(new Torneo(nombre, "Q1"));
+            nodoS.add(nodo_torneo);
+        } else if (nodoS.getParent().toString().equals("Q2")) {
+            DefaultMutableTreeNode nodo_torneo = new DefaultMutableTreeNode(new Torneo(nombre, "Q2"));
+            nodoS.add(nodo_torneo);
+        } else if (nodoS.getParent().toString().equals("Q4")) {
+            DefaultMutableTreeNode nodo_torneo = new DefaultMutableTreeNode(new Torneo(nombre, "Q2"));
+            nodoS.add(nodo_torneo);
+        } else if (nodoS.getParent().toString().equals("Q5")) {
+            DefaultMutableTreeNode nodo_torneo = new DefaultMutableTreeNode(new Torneo(nombre, "Q2"));
+            nodoS.add(nodo_torneo);
+        }
+        m.reload();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,7 +213,11 @@ public class ExamenII extends javax.swing.JFrame {
     private javax.swing.JTree JTree;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+     DefaultMutableTreeNode nodoS;
+
 }
