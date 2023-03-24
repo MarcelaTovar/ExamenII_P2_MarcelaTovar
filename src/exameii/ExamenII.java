@@ -4,8 +4,10 @@
  */
 package exameii;
 
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -97,13 +99,13 @@ public class ExamenII extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Puntuacion"
             }
         ));
         jScrollPane3.setViewportView(jTable1);
@@ -114,20 +116,23 @@ public class ExamenII extends javax.swing.JFrame {
                 jButton2MouseClicked(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(316, 316, 316)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton2)
+                        .addGap(151, 151, 151)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
@@ -139,14 +144,14 @@ public class ExamenII extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane3))
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -236,7 +241,7 @@ public class ExamenII extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        String nombre = JOptionPane.showInputDialog("Ingrese el nombre de el equipo: ");
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre de el deporte: ");
         DefaultTreeModel m = (DefaultTreeModel) JTree.getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) m.getRoot();
         DefaultMutableTreeNode nodo_deporte = new DefaultMutableTreeNode(new Deporte(nombre));
@@ -328,8 +333,39 @@ public class ExamenII extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
+        Torneo torneo = (Torneo) nodoS.getUserObject();
+        ArrayList<Equipo> temp = new ArrayList();
+        for (int i = 0; i < torneo.getEquipos().size()-1; i++) {
+            for (int j = 0; j < torneo.getEquipos().size()-i-1; j++) {
+                if (torneo.getEquipos().get(j).getPuntos() > torneo.getEquipos().get(j+1).getPuntos()) {
+                    temp.add(torneo.getEquipos().get(j));
+                    temp.add(torneo.getEquipos().get(j+1));
+                }else{
+                    temp.add(torneo.getEquipos().get(j+1));
+                    temp.add(torneo.getEquipos().get(j));
+                }
+            }
+        }
+        
+        DefaultTableModel tmodel = (DefaultTableModel) jTable1.getModel();
+        while (tmodel.getRowCount() > 0) {
+            tmodel.removeRow(0);
+        }
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        for (Equipo e : temp) {
+            Object[] row = {e.getNombre(), e.getPuntos()};
+            modelo.addRow(row);
+
+        }
+        
+        jTable1.setModel(modelo);
         jTable1.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
