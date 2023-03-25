@@ -698,7 +698,7 @@ public class ExamenII extends javax.swing.JFrame {
                     ((DefaultMutableTreeNode) raiz.getChildAt(0)).add(deporte);
                     DefaultMutableTreeNode torneos = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i).getTorneos().get(j));
                     torneosF.add(torneos);
-                    deporte.add(torneosF);
+                    deporte.add(torneos);
                 }else if(adminDeporte.getListaDeporte().get(i).getTorneos().get(j).getPeriodo().equals(raiz.getChildAt(1).toString())){
                     DefaultMutableTreeNode deporte = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i));
                     ((DefaultMutableTreeNode) raiz.getChildAt(1)).add(deporte);
@@ -718,12 +718,10 @@ public class ExamenII extends javax.swing.JFrame {
                     torneosF.add(torneos);
                     deporte.add(torneosF);
                 }
-
+                 m.reload();
             }
 
-            
-
-            m.reload();
+           
         }
 
     }//GEN-LAST:event_jButton3MouseClicked
