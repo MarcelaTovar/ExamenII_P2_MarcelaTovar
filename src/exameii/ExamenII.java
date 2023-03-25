@@ -592,10 +592,10 @@ public class ExamenII extends javax.swing.JFrame {
         for (int i = 0; i < torneo.getEquipos().size(); i++) {
             o.add(torneo.getEquipos().get(i).getPuntos());
         }
-        Collections.sort(o,Collections.reverseOrder());
+        Collections.sort(o, Collections.reverseOrder());
         for (int i = 0; i < o.size(); i++) {
             for (int j = 0; j < torneo.getEquipos().size(); j++) {
-                if (torneo.getEquipos().get(j).getPuntos()==(int)o.get(i)) {
+                if (torneo.getEquipos().get(j).getPuntos() == (int) o.get(i)) {
                     equipos.add(torneo.getEquipos().get(j));
                 }
             }
@@ -666,7 +666,7 @@ public class ExamenII extends javax.swing.JFrame {
         adminDeporte.getListaDeporte().add(deporte);
         adminDeporte.escribirArchivo();
         int tam = deporte.getTorneos().size();
-        Barra b = new Barra(jProgressBar1,tam,jDialog4);
+        Barra b = new Barra(jProgressBar1, tam, jDialog4);
         b.start();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
@@ -680,24 +680,50 @@ public class ExamenII extends javax.swing.JFrame {
             a = fc.getSelectedFile();
         }
         administrarDeporte adminDeporte = new administrarDeporte(a.getPath());
+        adminDeporte.cargarArchivo();
         adminDeporte.setArchivo(a);
         DefaultTreeModel m = (DefaultTreeModel) JTree.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
         for (int i = 0; i < adminDeporte.getListaDeporte().size(); i++) {
 
             DefaultMutableTreeNode torneosF = new DefaultMutableTreeNode();
+            //DefaultMutableTreeNode deporte = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i));
+            //((DefaultMutableTreeNode) raiz.getChildAt(0)).add(deporte);
+            //((DefaultMutableTreeNode) raiz.getChildAt(0)).add(deporte);
+            //((DefaultMutableTreeNode) raiz.getChildAt(0)).add(deporte);
 
             for (int j = 0; j < adminDeporte.getListaDeporte().size(); j++) {
-                DefaultMutableTreeNode torneos = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i).getTorneos().get(j));
-                torneosF.add(torneos);
+                if (adminDeporte.getListaDeporte().get(i).getTorneos().get(j).getPeriodo().equals(raiz.getChildAt(0).toString())) {
+                    DefaultMutableTreeNode deporte = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i));
+                    ((DefaultMutableTreeNode) raiz.getChildAt(0)).add(deporte);
+                    DefaultMutableTreeNode torneos = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i).getTorneos().get(j));
+                    torneosF.add(torneos);
+                    deporte.add(torneosF);
+                }else if(adminDeporte.getListaDeporte().get(i).getTorneos().get(j).getPeriodo().equals(raiz.getChildAt(1).toString())){
+                    DefaultMutableTreeNode deporte = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i));
+                    ((DefaultMutableTreeNode) raiz.getChildAt(1)).add(deporte);
+                    DefaultMutableTreeNode torneos = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i).getTorneos().get(j));
+                    torneosF.add(torneos);
+                    deporte.add(torneosF);
+                }else if(adminDeporte.getListaDeporte().get(i).getTorneos().get(j).getPeriodo().equals(raiz.getChildAt(2).toString())){
+                    DefaultMutableTreeNode deporte = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i));
+                    ((DefaultMutableTreeNode) raiz.getChildAt(2)).add(deporte);
+                    DefaultMutableTreeNode torneos = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i).getTorneos().get(j));
+                    torneosF.add(torneos);
+                    deporte.add(torneosF);
+                }else if(adminDeporte.getListaDeporte().get(i).getTorneos().get(j).getPeriodo().equals(raiz.getChildAt(3).toString())){
+                    DefaultMutableTreeNode deporte = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i));
+                    ((DefaultMutableTreeNode) raiz.getChildAt(3)).add(deporte);
+                    DefaultMutableTreeNode torneos = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i).getTorneos().get(j));
+                    torneosF.add(torneos);
+                    deporte.add(torneosF);
+                }
+
             }
 
-            DefaultMutableTreeNode deporte = new DefaultMutableTreeNode(adminDeporte.getListaDeporte().get(i));
-            deporte.add(torneosF);
-            ((DefaultMutableTreeNode) raiz.getChildAt(0)).add(deporte);
             
-            m.reload();
 
+            m.reload();
         }
 
     }//GEN-LAST:event_jButton3MouseClicked
