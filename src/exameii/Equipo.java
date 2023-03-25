@@ -4,11 +4,13 @@
  */
 package exameii;
 
+import java.io.Serializable;
+
 /**
  *
  * @author marcela
  */
-public class Equipo {
+public class Equipo implements Serializable{
     private String nombre;
     private int puntos;
 
